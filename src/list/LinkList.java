@@ -7,7 +7,10 @@ package list;
  */
 public class LinkList<T> {
 
+    //头结点
     private Node head;
+
+    private int length;
 
     private class Node {
         T data;
@@ -18,9 +21,10 @@ public class LinkList<T> {
         head = new Node();
         head.data = null;
         head.next = null;
+        length = 0;
     }
 
-    public T getElementByIndex(int index) {
+    public T get(int index) {
         if (index <= 0) {
             return null;
         }
@@ -35,30 +39,46 @@ public class LinkList<T> {
         return null;
     }
 
-    public boolean insertElementToPosition(T data, int position) {
-        if (position <= 0) {
+    public boolean insert(T data, int position) {
+        if (position <= 0 || position > length+1) {
             return false;
         }
-        Node frontNode = head;
-        int count = 1;
-        while (frontNode.next != null && count++ < position) {
-            frontNode = frontNode.next;
+        Node pre = head;
+        int i = 1;
+        while (i++ < position) {
+            pre = pre.next;
         }
-        if (count == position) {
-            Node newNode = new Node();
-            newNode.data = data;
-            newNode.next = frontNode.next;
-            frontNode.next = newNode;
-            return true;
+        Node newNode = new Node();
+        newNode.data = data;
+        newNode.next = pre.next;
+        pre.next = newNode;
+        length++;
+        return true;
+    }
+
+    public int length() {
+        return length;
+    }
+
+    public boolean delete(int position) {
+        if (position <= 0 || position > length) {
+            return false;
         }
-        return false;
+        Node pre = head;
+        int i = 1;
+        while (i++ < position) {
+            pre = pre.next;
+        }
+        pre.next = pre.next.next;
+        length--;
+        return true;
     }
 
 
     public void printList() {
         Node node = head;
         while (node.next != null) {
-            System.out.print(node.next.data + " ");
+            System.out.println(node.next.data);
             node = node.next;
         }
     }
@@ -66,8 +86,11 @@ public class LinkList<T> {
 
     public static void main(String[] args) {
         LinkList<Integer> list = new LinkList<>();
-        list.insertElementToPosition(6, 1);
-        list.insertElementToPosition(2, 5);
+        list.insert(6, 1);
+        list.insert(2, 5);
+        list.insert(8, 1);
+        list.insert(11, 2);
+        list.delete(1);
         list.printList();
     }
 

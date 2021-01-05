@@ -20,14 +20,14 @@ public class SequenceList<T> {
         length = 0;
     }
 
-    public T getElemntByIndex(int index) {
+    public T get(int index) {
         if (length == 0 || index >= length) {
             return null;
         }
         return data[index];
     }
 
-    public boolean insertByPosition(T element, int position) {
+    public boolean insert(T element, int position) {
         if (length == MAX_SIZE) {
             return false;
         }
